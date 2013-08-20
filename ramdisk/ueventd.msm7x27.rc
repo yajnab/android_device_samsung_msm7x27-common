@@ -18,6 +18,10 @@
 /dev/ppp                     0660  radio     vpn
 /dev/tun                     0640  vpn       vpn
 
+# the DIAG device node is not world writable/readable.
+/dev/diag                    0660  system    qcom_diag
+
+
 ## Graphics
 /dev/kgsl-3d0                0666  root      root
 /dev/kgsl-2d0                0666  root      root
