@@ -27,6 +27,9 @@ on fs
 
     # framebuffer permission for copybit
     chmod 0666 /dev/graphics/fb0
+    
+    # mount file system
+    mount_all /fstab.$(SAMSUNG_BOOTLOADER)
 
     mount ext4 /dev/block/stl12 /system wait rw
     mount ext4 /dev/block/stl12 /system wait ro remount
