@@ -25,6 +25,9 @@ on early-init
 
 on fs
 
+    # framebuffer permission for copybit
+    chmod 0666 /dev/graphics/fb0
+
     mount ext4 /dev/block/stl12 /system wait rw
     mount ext4 /dev/block/stl12 /system wait ro remount
     mount ext4 /dev/block/stl13 /data wait nosuid nodev
