@@ -2,6 +2,12 @@ LOCAL_PATH:= $(call my-dir)
 include $(CLEAR_VARS)
 
 
+include $(CLEAR_VARS)
+LOCAL_MODULE       := fstab.$(SAMSUNG_BOOTLOADER)
+LOCAL_MODULE_CLASS := ETC
+LOCAL_SRC_FILES    := etc/fstab.msm7x27
+LOCAL_MODULE_PATH  := $(TARGET_ROOT_OUT)
+include $(BUILD_PREBUILT)
 
 include $(CLEAR_VARS)
 LOCAL_MODULE       := charging.rle
@@ -10,8 +16,6 @@ LOCAL_MODULE_CLASS := ETC
 LOCAL_SRC_FILES    := etc/charging.rle
 LOCAL_MODULE_PATH  := $(TARGET_ROOT_OUT)
 include $(BUILD_PREBUILT)
-
-
 
 include $(CLEAR_VARS)
 LOCAL_MODULE       := init.$(SAMSUNG_BOOTLOADER).bluez.rc

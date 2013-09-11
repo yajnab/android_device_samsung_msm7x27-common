@@ -36,7 +36,7 @@ PRODUCT_COPY_FILES += \
     system/bluetooth/data/blacklist.conf:system/etc/bluetooth/blacklist.conf \
     system/bluetooth/data/input.conf:system/etc/bluetooth/input.conf \
     system/bluetooth/data/main.le.conf:system/etc/bluetooth/main.conf \
-    system/bluetooth/data/network.conf:system/etc/bluetooth/network.conf 
+    system/bluetooth/data/network.conf:system/etc/bluetooth/network.conf
 #    system/bluetooth/data/stack.conf:system/etc/bluetooth/stack.conf
 
 # BlueZ: javax.btobex is required by Bluetooth_msm
@@ -87,10 +87,6 @@ PRODUCT_PACKAGES += \
     make_ext4fs \
     brcm_patchram_plus \
     setup_fs
-
-## Vold config
-PRODUCT_COPY_FILES += \
-    device/samsung/msm7x27-common/prebuilt/etc/vold.fstab:system/etc/vold.fstab
 
 ## Hardware properties
 PRODUCT_COPY_FILES += \
@@ -152,14 +148,13 @@ PRODUCT_PROPERTY_OVERRIDES += \
 SAMSUNG_BOOTLOADER := $(shell echo $(PRODUCT_VERSION_DEVICE_SPECIFIC)board | tr '[A-Z]' '[a-z]' | cut -c 2-)
 
 PRODUCT_PACKAGES += \
-    fstab.$(SAMSUNG_BOOTLOADER) \
     charging.rle \
+    fstab.$(SAMSUNG_BOOTLOADER) \
     init.$(SAMSUNG_BOOTLOADER).rc \
     init.$(SAMSUNG_BOOTLOADER).bluez.rc \
     init.$(SAMSUNG_BOOTLOADER).parts.rc \
     init.$(SAMSUNG_BOOTLOADER).usb.rc \
     ueventd.$(SAMSUNG_BOOTLOADER).rc
-
 
 # Inherit qcom/msm7x27
 $(call inherit-product, device/qcom/msm7x27/msm7x27.mk)
