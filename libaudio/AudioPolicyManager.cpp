@@ -523,8 +523,7 @@ bool AudioPolicyManager::isStreamActive(int stream, uint32_t inPastMs) const
     if (stream == AudioSystem::MUSIC && (mAvailableOutputDevices & AUDIO_DEVICE_OUT_FM)) {
         return true;
     }
-#endif    
-
+#endif
     return false;
 }
 
