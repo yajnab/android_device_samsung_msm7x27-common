@@ -150,7 +150,6 @@ SAMSUNG_BOOTLOADER := $(shell echo $(PRODUCT_VERSION_DEVICE_SPECIFIC)board | tr 
 PRODUCT_PACKAGES += \
     charging.rle \
     fstab.$(SAMSUNG_BOOTLOADER) \
-    init.$(SAMSUNG_BOOTLOADER).rc \
     init.$(SAMSUNG_BOOTLOADER).bluez.rc \
     init.$(SAMSUNG_BOOTLOADER).parts.rc \
     init.$(SAMSUNG_BOOTLOADER).usb.rc \
