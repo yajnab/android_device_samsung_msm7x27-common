@@ -17,15 +17,18 @@
 # Product-common compile-time definitions.
 #
 
-## Define BOARD_HAVE_BLUETOOTH_BLUEZ before device/qcom/msm7x27/BoardConfigCommon.mk
-## Bluetooth
-BOARD_HAVE_BLUETOOTH_BCM := true
-BOARD_HAVE_BLUETOOTH_BLUEZ := true
-BOARD_HAVE_SAMSUNG_BLUETOOTH := true
-#BOARD_BLUEDROID_VENDOR_CONF := device/samsung/msm7x27-common/bluetooth/vnd_samsung.txt
-
 # Use the Qualcomm common folder
 include device/qcom/msm7x27/BoardConfigCommon.mk
+
+## Bluetooth
+## Note: BOARD_HAVE_BLUETOOTH_BLUEZ is defined in
+## device/samsung/msm7x27-common/common.mk due to inheritance issues.
+ifndef BOARD_HAVE_BLUETOOTH_BLUEZ
+	BOARD_HAVE_BLUETOOTH := true
+	BOARD_BLUEDROID_VENDOR_CONF := device/samsung/msm7x27-common/bluetooth/vnd_samsung.txt
+endif
+BOARD_HAVE_BLUETOOTH_BCM := true
+BOARD_HAVE_SAMSUNG_BLUETOOTH := true
 
 ## Kernel
 BOARD_KERNEL_BASE := 0x13600000
@@ -36,6 +39,7 @@ else
 	TARGET_KERNEL_SOURCE := kernel/samsung/msm7x27
 endif
 TARGET_PROVIDES_INIT_TARGET_RC := true
+
 
 ## Platform
 TARGET_BOARD_PLATFORM_GPU := qcom-adreno200
@@ -54,6 +58,7 @@ USE_CAMERA_STUB := false
 BOARD_USE_NASTY_PTHREAD_CREATE_HACK := true
 
 ## Qualcomm, display
+TARGET_DISABLE_TRIPLE_BUFFERING := true
 ifdef BUILD_WITH_30X_KERNEL
 	TARGET_NO_HW_VSYNC := false
 endif
@@ -156,6 +161,9 @@ BOARD_UMS_LUNFILE := "/sys/devices/platform/msm_hsusb/gadget/lun0/file"
 
 ## Legacy touchscreen support
 BOARD_USE_LEGACY_TOUCHSCREEN := true
+
+## Fonts
+SMALLER_FONT_FOOTPRINT := true
 
 ## Device specific libs
 TARGET_PROVIDES_LIBAUDIO := true

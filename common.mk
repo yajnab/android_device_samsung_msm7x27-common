@@ -23,14 +23,23 @@ PRODUCT_PACKAGES += \
     audio_policy.msm7x27 \
     audio.primary.msm7x27
 
+## BlueZ support
+## Note: needs to be defined here in order to satisfy inheritance issues.
+## If disabled, Bluedroid will be used.
+#BOARD_HAVE_BLUETOOTH_BLUEZ := true
+
+
+ifdef BOARD_HAVE_BLUETOOTH_BLUEZ
 # BlueZ: binaries
 PRODUCT_PACKAGES += \
     bluetoothd \
     libbluetoothd \
+    brcm_patchram_plus \
     hcitool \
     hciconfig \
     hciattach \
     brcm_patchram_plus
+
 
 # BlueZ: configs
 PRODUCT_COPY_FILES += \
@@ -58,6 +67,8 @@ PRODUCT_PROPERTY_OVERRIDES += \
     ro.qualcomm.bluetooth.opp=true \
     ro.qualcomm.bluetooth.pbap=true \
     ro.qualcomm.bluetooth.sap=true
+    
+endif
 
 ## Camera
 PRODUCT_PACKAGES += \
@@ -88,7 +99,6 @@ PRODUCT_PACKAGES += \
     lights.msm7x27 \
     power.msm7x27 \
     make_ext4fs \
-    brcm_patchram_plus \
     setup_fs
 
 ## Hardware properties
@@ -153,10 +163,15 @@ PRODUCT_COPY_FILES += \
     device/samsung/msm7x27-common/ramdisk/fstab.msm7x27:root/fstab.msm7x27 \
     device/samsung/msm7x27-common/ramdisk/fstab.msm7x27:root/fstab.$(SAMSUNG_BOOTLOADER) \
     device/samsung/msm7x27-common/ramdisk/init.msm7x27.rc:root/init.$(SAMSUNG_BOOTLOADER).rc \
-    device/samsung/msm7x27-common/ramdisk/init.msm7x27.bluez.rc:root/init.$(SAMSUNG_BOOTLOADER).bluez.rc \
+    device/samsung/msm7x27-common/ramdisk/init.msm7x27.bluedroid.rc:root/init.$(SAMSUNG_BOOTLOADER).bluetooth.rc \
     device/samsung/msm7x27-common/ramdisk/init.msm7x27.parts.rc:root/init.$(SAMSUNG_BOOTLOADER).parts.rc \
     device/samsung/msm7x27-common/ramdisk/init.msm7x27.usb.rc:root/init.$(SAMSUNG_BOOTLOADER).usb.rc \
     device/samsung/msm7x27-common/ramdisk/ueventd.msm7x27.rc:root/ueventd.$(SAMSUNG_BOOTLOADER).rc
+    
+ifdef BOARD_HAVE_BLUETOOTH_BLUEZ
+PRODUCT_COPY_FILES += \
+      device/samsung/msm7x27-common/ramdisk/init.msm7x27.bluez.rc:root/init.$(SAMSUNG_BOOTLOADER).bluetooth.rc 
+endif
 
 # Inherit qcom/msm7x27
 $(call inherit-product, device/qcom/msm7x27/msm7x27.mk)
@@ -169,3 +184,54 @@ PRODUCT_AAPT_CONFIG := ldpi mdpi normal
 
 # Samsung msm7x27-common overlays
 DEVICE_PACKAGE_OVERLAYS += device/samsung/msm7x27-common/overlay
+
+#Ramdisk (recovery)
+PRODUCT_COPY_FILES += \
+    device/samsung/msm7x27-common/recovery/init.recovery.msm7x27.rc:root/init.recovery.$(SAMSUNG_BOOTLOADER).rc
+
+### BEGIN: Common properties
+
+## Dalvik
+PRODUCT_PROPERTY_OVERRIDES += \
+    dalvik.vm.checkjni=0 \
+    dalvik.vm.debug.alloc=0 \
+    dalvik.vm.dexopt-data-only=1 \
+    dalvik.vm.dexopt-flags=v=a,o=v,m=y,u=y
+
+## Graphics
+PRODUCT_PROPERTY_OVERRIDES += \
+    debug.composition.type=mdp \
+    debug.sf.no_hw_vsync=0
+
+## Loop ringtone
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.telephony.call_ring.delay=3000 \
+    ro.telephony.call_ring.multiple=false
+
+## Other
+PRODUCT_PROPERTY_OVERRIDES += \
+    DEVICE_PROVISIONED=1 \
+    dev.sfbootcomplete=0 \
+    ro.config.play.bootsound=0 \
+    ro.setupwizard.enable_bypass=1
+
+## RIL, telephony
+PRODUCT_PROPERTY_OVERRIDES += \
+    mobiledata.interfaces=pdp0,gprs,ppp0 \
+    rild.libargs=-d/dev/smd0 \
+    rild.libpath=/system/lib/libsec-ril.so \
+    ro.telephony.default_network=0 \
+    ro.telephony.ril_class=SamsungMSMRIL
+
+## USB
+PRODUCT_PROPERTY_OVERRIDES += \
+    persist.service.adb.enable=1 \
+    persist.sys.usb.config=mass_storage,adb
+
+## WiFi
+PRODUCT_PROPERTY_OVERRIDES += \
+    wifi.ap.interface=athap0 \
+    wifi.interface=wlan0 \
+    wifi.supplicant_scan_interval=180
+
+### END: Common properties

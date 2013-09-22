@@ -12,4 +12,5 @@ boot			/boot		bml	defaults		recoveryonly
 recovery		/recovery	bml	defaults		recoveryonly
 /dev/block/mmcblk0p1	/sdcard		vfat	defaults		recoveryonly
 /dev/block/mmcblk0p2	/sd-ext		auto	defaults		recoveryonly
-/devices/platform/msm_sdcc.1/mmc_host/mmc0 /storage/sdcard0		vfat	defaults	voldmanaged=sdcard:auto 		
+/devices/platform/msm_sdcc.1/mmc_host/mmc0 /storage/sdcard0		vfat	defaults	voldmanaged=sdcard:auto
+/devices/platform/msm_hsusb_host.0/usb1 /storage/usbdisk0       auto    defaults    voldmanaged=usbdisk:auto 		
